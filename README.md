@@ -1,82 +1,44 @@
-wait(0.5)
-
--- Create GUI elements
-local screenGui = Instance.new("ScreenGui")
-local frame = Instance.new("Frame")
-local label1 = Instance.new("TextLabel")
-local label2 = Instance.new("TextLabel")
-local label3 = Instance.new("TextLabel")
-
--- Parent GUI to CoreGui
-screenGui.Parent = game.CoreGui
-
--- Frame settings
-frame.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-frame.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
-frame.Size = UDim2.new(0, 370, 0, 52)
-frame.Position = UDim2.new(0.698160767, 0, 0.089906864, 0)
-frame.Draggable = true
-frame.Active = true
-frame.Parent = screenGui
-
--- Label 1: Title
-label1.Size = UDim2.new(0, 370, 0, 18)
-label1.Position = UDim2.new(0, 0, 0.0192306, 0)
-label1.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
-label1.Font = Enum.Font.SourceSansSemibold
-label1.Text = "Anti AFK Script"
-label1.TextColor3 = Color3.new(1, 1, 1)
-label1.TextSize = 22
-label1.Parent = frame
-
--- Label 2: Status
-label2.Size = UDim2.new(0, 370, 0, 21)
-label2.Position = UDim2.new(0, 0, 0.800455689, 0)
-label2.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
-label2.Font = Enum.Font.Arial
-label2.Text = "Status: Active"
-label2.TextColor3 = Color3.new(1, 1, 1)
-label2.TextSize = 20
-label2.Parent = frame
-
--- Label 3: Message
-label3.Size = UDim2.new(0, 370, 0, 14)
-label3.Position = UDim2.new(0, 0, 0.158377, 0)
-label3.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
-label3.Font = Enum.Font.ArialBold
-label3.Text = "Roblox tried to kick, but I stayed active"
-label3.TextColor3 = Color3.new(1, 1, 1)
-label3.TextSize = 20
-label3.Parent = frame
-
--- Anti-AFK functionality
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-	local virtualUser = game:service("VirtualUser")
-	virtualUser:CaptureController()
-	virtualUser:ClickButton2(Vector2.new())
-	label2.Text = "Status: Active"
-end)
-
--- Tween animation for smooth appearance
+wait(0.5)-- ANIMATION: Fade in GUI and text
 local TweenService = game:GetService("TweenService")
 
--- Make all elements transparent at start
-frame.BackgroundTransparency = 1
-for _, child in pairs(frame:GetDescendants()) do
-	if child:IsA("TextLabel") then
-		child.TextTransparency = 1
-	end
-end
+-- Set elements transparent initially
+ca.BackgroundTransparency = 1
+ca.TextTransparency = 1
+da.BackgroundTransparency = 1
+_b.TextTransparency = 1
+ab.TextTransparency = 1
 
--- Create and play tweens
+-- Create tween settings
 local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-local tweenFrame = TweenService:Create(frame, tweenInfo, {BackgroundTransparency = 0})
-tweenFrame:Play()
+-- Animate ca (main title bar)
+TweenService:Create(ca, tweenInfo, {BackgroundTransparency = 0}):Play()
+TweenService:Create(ca, tweenInfo, {TextTransparency = 0}):Play()
 
-for _, child in pairs(frame:GetDescendants()) do
-	if child:IsA("TextLabel") then
-		local tweenText = TweenService:Create(child, tweenInfo, {TextTransparency = 0})
-		tweenText:Play()
-	end
-end
+-- Animate da (frame block)
+TweenService:Create(da, tweenInfo, {BackgroundTransparency = 0}):Play()
+
+-- Animate _b (bottom text)
+TweenService:Create(_b, tweenInfo, {TextTransparency = 0}):Play()
+
+-- Animate ab (status)
+TweenService:Create(ab, tweenInfo, {TextTransparency = 0}):Play()
+local ba=Instance.new("ScreenGui") 
+local ca=Instance.new("TextLabel")local da=Instance.new("Frame") 
+local _b=Instance.new("TextLabel")local ab=Instance.new("TextLabel")ba.Parent=game.CoreGui 
+ba.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;ca.Parent=ba;ca.Active=true 
+ca.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)ca.Draggable=true 
+ca.Position=UDim2.new(0.698610067,0,0.098096624,0)ca.Size=UDim2.new(0,370,0,52) 
+ca.Font=Enum.Font.SourceSansSemibold;ca.Text="Anti AFK Script"ca.TextColor3=Color3.new(0,1,1) 
+ca.TextSize=22;da.Parent=ca 
+da.BackgroundColor3=Color3.new(0.196078,0.196078,0.196078)da.Position=UDim2.new(0,0,1.0192306,0) 
+da.Size=UDim2.new(0,370,0,107)_b.Parent=da 
+_b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)_b.Position=UDim2.new(0,0,0.800455689,0) 
+_b.Size=UDim2.new(0,370,0,21)_b.Font=Enum.Font.Arial;_b.Text="сусляк" 
+_b.TextColor3=Color3.new(0,1,1)_b.TextSize=20;ab.Parent=da 
+ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)ab.Position=UDim2.new(0,0,0.158377,0) 
+ab.Size=UDim2.new(0,370,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="Status: Active" 
+ab.TextColor3=Color3.new(0,1,1)ab.TextSize=20;local bb=game:service'VirtualUser' 
+game:service'Players'.LocalPlayer.Idled:connect(function() 
+bb:CaptureController()bb:ClickButton2(Vector2.new()) 
+ab.Text="Roblox tried to kick u but i kicked him instead"wait(2)ab.Text="Status : Active"end)
