@@ -20,26 +20,45 @@ _b.TextColor3=Color3.new(1,1,1)_b.TextSize=20;ab.Parent=da
 ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)
 ab.BackgroundTransparency=0.4
 ab.Position=UDim2.new(0,0,0.158377379,0)
-ab.Size=UDim2.new(0,304,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="⏱  00:00:00"
+ab.Size=UDim2.new(0,304,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="⏱ Время работы: 00:00:00 / FPS: 0"
 ab.TextColor3=Color3.new(1,1,1)ab.TextSize=20;local bb=game:service'VirtualUser'
+local RunService = game:GetService("RunService")
 local seconds = 0
+local currentFPS = 0
+
 local function formatTime(t)
     local h = math.floor(t / 3600)
     local m = math.floor((t % 3600) / 60)
     local s = t % 60
     return string.format("%02d:%02d:%02d", h, m, s)
 end
+
+-- Счётчик FPS через RenderStepped
+spawn(function()
+    local frameCount = 0
+    local lastTime = tick()
+    RunService.RenderStepped:Connect(function()
+        frameCount = frameCount + 1
+        if tick() - lastTime >= 1 then
+            currentFPS = frameCount
+            frameCount = 0
+            lastTime = tick()
+        end
+    end)
+end)
+
+-- Обновление текста каждую секунду
 spawn(function()
     while true do
         wait(1)
         seconds = seconds + 1
-        ab.Text = "⏱  " .. formatTime(seconds)
+        ab.Text = "⏱" .. formatTime(seconds) .. " / FPS: " .. tostring(currentFPS)
     end
 end)
+
 game:service'Players'.LocalPlayer.Idled:connect(function()
     bb:CaptureController()bb:ClickButton2(Vector2.new())
     ab.Text="⚠️ ROBLOX tried to kick you... but I stepped in."
     wait(2)
-    ab.Text = "⏱  " .. formatTime(seconds)
+    ab.Text = "⏱" .. formatTime(seconds) .. " / FPS: " .. tostring(currentFPS)
 end)
-
