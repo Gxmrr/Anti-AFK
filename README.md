@@ -20,25 +20,45 @@ _b.TextColor3=Color3.new(1,1,1)_b.TextSize=20;ab.Parent=da
 ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)
 ab.BackgroundTransparency=0.4
 ab.Position=UDim2.new(0,0,0.158377379,0)
-ab.Size=UDim2.new(0,304,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="⏱ Время работы: 00:00:00"
+ab.Size=UDim2.new(0,304,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="⏱ 00:00:00 / FPS: 0"
 ab.TextColor3=Color3.new(1,1,1)ab.TextSize=20;local bb=game:service'VirtualUser'
 local seconds = 0
+local currentFPS = 0
+
 local function formatTime(t)
     local h = math.floor(t / 3600)
     local m = math.floor((t % 3600) / 60)
     local s = t % 60
     return string.format("%02d:%02d:%02d", h, m, s)
 end
+
+-- Обновление FPS и таймера
+spawn(function()
+    local frames = 0
+    local lastUpdate = tick()
+    while true do
+        frames = frames + 1
+        local now = tick()
+        if now - lastUpdate >= 1 then
+            currentFPS = frames
+            frames = 0
+            lastUpdate = now
+        end
+        wait()
+    end
+end)
+
 spawn(function()
     while true do
         wait(1)
         seconds = seconds + 1
-        ab.Text = "⏱ Время работы: " .. formatTime(seconds)
+        ab.Text = "⏱" .. formatTime(seconds) .. " / FPS: " .. tostring(currentFPS)
     end
 end)
+
 game:service'Players'.LocalPlayer.Idled:connect(function()
     bb:CaptureController()bb:ClickButton2(Vector2.new())
     ab.Text="⚠️ ROBLOX tried to kick you... but I stepped in."
     wait(2)
-    ab.Text = "⏱ Время работы: " .. formatTime(seconds)
+    ab.Text = "⏱" .. formatTime(seconds) .. " / FPS: " .. tostring(currentFPS)
 end)
