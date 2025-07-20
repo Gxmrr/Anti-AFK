@@ -33,7 +33,6 @@ local function formatTime(t)
     return string.format("%02d:%02d:%02d", h, m, s)
 end
 
--- Счётчик FPS через RenderStepped
 spawn(function()
     local frameCount = 0
     local lastTime = tick()
@@ -47,7 +46,6 @@ spawn(function()
     end)
 end)
 
--- Обновление текста каждую секунду
 spawn(function()
     while true do
         wait(1)
